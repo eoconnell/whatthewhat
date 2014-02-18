@@ -2,5 +2,7 @@
 
 error=`grep -E "Error|Exception"`
 
+echo "Googling \"$error\""
+
 open "http://google.com/?q=$error"
 
