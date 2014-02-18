@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+error=`grep -E "Error|Exception"`
+
+open "http://google.com/?q=$error"
+
