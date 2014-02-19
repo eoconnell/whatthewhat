@@ -1,8 +1,53 @@
 #!/usr/bin/env bash
+#
+# This script launches a Google search for errors/exceptions caused by the
+# given command.
+#
+# Example usage:
+#     $ wtw 'python tester.py'
 
-error=`grep -E "Error|Exception"`
+command=$1
 
-echo "Googling \"$error\""
+if [ -z "$1" ]; then
+  usage
+  exit $E_BADARGS
+fi
 
-open "http://google.com/?q=$error"
+main() {
+  error=`find_error`
 
+  url=`get_url "$error"`
+
+  open_url "$url"
+}
+
+find_error() {
+  execute_command 2>&1 | grep -E "Error|Exception"
+}
+
+execute_command() {
+  eval $command
+}
+
+get_url() {
+  echo "http://google.com/?q=$1"
+}
+
+open_url() {
+  if which open > /dev/null; then
+    open "$1"
+  elif which gnome-open > /dev/null; then
+    gnome-open "$1"
+  elif which xdg-open > /dev/null; then
+    xdg-open "$1"
+  else
+    echo "ERROR: could not open \"$1\" in your browser. We've tried open, gnome-open, xdg-open."
+    exit
+  fi
+}
+
+usage() {
+  echo "usage: `basename $0` command"
+}
+
+main
