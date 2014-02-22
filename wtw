@@ -37,11 +37,11 @@ open_url() {
   if which open > /dev/null; then
     open "$1"
   elif which gnome-open > /dev/null; then
-    gnome-open "$1"
+    gvfs-open "$1"
   elif which xdg-open > /dev/null; then
     xdg-open "$1"
   else
-    echo "ERROR: could not open \"$1\" in your browser. We've tried open, gnome-open, xdg-open."
+    echo "ERROR: could not open \"$1\" in your browser. We've tried open(1), gvfs-open(1), xdg-open(1)."
     exit
   fi
 }
