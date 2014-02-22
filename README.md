@@ -37,4 +37,5 @@ You can drop `wtw` into `~/bin` or `/usr/local/bin`. Just be sure the directory 
 TODO
 ====
 
+* Improve the logic to find the error line.
 * Improve browser delegation
